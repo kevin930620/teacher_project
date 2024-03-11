@@ -1,0 +1,1609 @@
+<html lang="en"><script async="false" type="text/javascript" src="chrome-extension://fnjhmkhhmkbjkkabndcnnogagogbneec/in-page.js"></script><head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+
+	<link rel="stylesheet" href="/static/css/main2.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css" rel="stylesheet">
+
+	<script>
+		function login() {
+			location.href = "/member/login/";
+		}
+		function logout() {
+			window.alert("您已登出會員");
+			window.location.href = "/member/logout/";
+		}
+	</script>
+	<style>
+		.add-to-cart-container {
+			display: flex;
+			justify-content: flex-end;
+			/* Aligns the child element to the right */
+		}
+
+		@media (max-width: 768px) {
+			.footer {
+				display: flex;
+				align-items: center;
+			}
+
+			.footer i {
+				max-width: 50%;
+				height: auto;
+			}
+
+			.footer h4 {
+				margin-left: 10px;
+			}
+
+			.carousel-indicators {
+				max-width: 50%;
+				margin: 0 auto;
+			}
+
+			.carousel-indicators button {
+				width: 10%;
+				height: 20px;
+
+			}
+		}
+
+		.col-3.col-12-medium .footer {
+			margin-right: 30px;
+		}
+
+		.col-6-medium {
+			margin-bottom: 60px;
+		}
+
+		.col-6.col-6-medium {
+			margin-top: 90px;
+
+		}
+
+		.carousel-indicators {
+			display: flex;
+			justify-content: center;
+			list-style: none;
+			padding: 0;
+		}
+
+		#news-ticker-container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			overflow: hidden;
+			/* 隐藏溢出的内容，保持容器高度固定 */
+		}
+
+		#news-ticker {
+			width: 100%;
+			/*background-color: rgba(255, 255, 255, 0.5);*/
+			color: #413939;
+			height: 50px;
+			padding: 10px;
+			padding-left: 45%;
+			font-size: 20px;
+			white-space: nowrap;
+			overflow: hidden;
+			position: absolute;
+			top: 15%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+		}
+
+		@keyframes ticker {
+			0% {
+				transform: translate(-50%, -50%);
+			}
+
+			100% {}
+		}
+
+		#additional-links {
+			margin-top: 20px;
+			width: 100%;
+			height: 50px;
+			padding: 10px;
+			font-size: 20px;
+			position: absolute;
+			top: 20%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+		}
+
+		#additional-links a {
+			margin-right: 20px;
+			text-decoration: none;
+			color: #ffffff;
+			font-size: 16px;
+		}
+
+		.nav-tabs {
+			background-color: #ffffff;
+			padding: 10px;
+			/* 加入內邊距以增加項目間的間距 */
+			justify-content: center;
+
+		}
+
+		.nav-tabs .nav-link {
+			color: rgb(43, 107, 73);
+		}
+
+		.nav-tabs .nav-link.active {
+			color: rgb(123, 132, 130);
+		}
+
+		.nav-link {
+			color: #806868;
+		}
+
+
+		.nav-pills {
+			color: #ffffff;
+
+		}
+
+
+		.nav-pills .nav-item .nav-link:hover {
+			background-color: #ab9090;
+			color: #fcfcfc;
+		}
+
+
+		.nav-pills .nav-item .nav-link.active {
+			background-color: #846f6f;
+		}
+
+		.product-container {
+			text-align: center;
+			border: 5px solid #fffefe;
+			padding: 20px;
+			max-width: 600px;
+		}
+
+		.product-image {
+			width: 100%;
+			height: auto;
+			margin-bottom: 10px;
+		}
+
+		.product-title {
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+
+		.product-discount-price {
+			color: #d88240;
+			margin-bottom: 5px;
+		}
+
+		.size-options,
+		.stock {
+			margin-bottom: 20px;
+		}
+
+		.size-options h3,
+		.color-options h3,
+		.stock h3 {
+			font-size: 18px;
+			margin-bottom: 10px;
+		}
+
+		.product-regular-price {
+			text-decoration: line-through;
+			color: #999;
+			margin-bottom: 10px;
+		}
+
+		.add-to-cart-button {
+			background-color: rgb(237, 195, 158);
+			transition: background-color 0.3s ease;
+			color: #ffffff;
+			padding: 10px 20px;
+			border: none;
+			cursor: pointer;
+			display: inline-block;
+			width: 10px;
+
+		}
+
+
+		.add-to-cart-button:hover {
+			background-color: rgb(255, 255, 255);
+			color: #433838;
+			border: 2px solid rgb(211, 138, 138);
+			display: inline-block;
+		}
+
+		.col-6-medium {
+			margin-bottom: 10px;
+		}
+
+		input[type="button"],
+		input[type="submit"],
+		input[type="reset"],
+		button,
+		.button {
+			-moz-transition: all .25s ease-in-out;
+			-webkit-transition: all .25s ease-in-out;
+			-ms-transition: all .25s ease-in-out;
+			transition: all .25s ease-in-out;
+			display: inline-block;
+			background: #444;
+			text-align: center;
+			text-transform: uppercase;
+			font-weight: 700;
+			letter-spacing: 0.25em;
+			text-decoration: none;
+			border-radius: 0.35em;
+			border: 0;
+			outline: 0;
+			cursor: pointer;
+			padding: 0 2.25em 0 2.25em;
+			font-size: 0.9em;
+			min-width: 2em;
+			max-width: none;
+			height: 4em;
+			line-height: 4em;
+		}
+
+
+		a:hover {
+			text-decoration: dotted;
+		}
+
+		
+
+		.to_cart {
+			background-color: rgb(140, 77, 53);
+			transition: background-color 0.3s ease;
+			color: #ffffff;
+			padding: 10px 20px;
+			border: none;
+			cursor: pointer;
+			display: inline-block;
+			border-radius: 10px;
+		}
+
+		.to_cart:hover {
+			background-color: rgb(255, 255, 255);
+			color: #806868;
+			border: 2px solid rgb(54, 39, 39);
+			display: inline-block;
+			border-radius: 10px;
+		}
+
+		.product-card {
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			overflow: hidden;
+			transition: transform 0.3s ease;
+		}
+
+		.product-card:hover {
+			transform: scale(1.05);
+		}
+
+		.product-details {
+			padding: 15px;
+			text-align: left;
+		}
+
+		.product-title {
+			font-weight: bold;
+			font-size: 25px;
+			margin-bottom: 5px;
+			display: block;
+			color: #4f4040;
+		}
+
+		.product-discount-price {
+			color: #d88240;
+			margin-bottom: 5px;
+		}
+
+		.product-regular-price {
+			text-decoration: line-through;
+			color: #999;
+			margin-bottom: 5px;
+		}
+
+
+
+
+
+		.cart-button {
+			background-color: rgb(255, 255, 255);
+			transition: background-color 0.3s ease;
+			color: #ffffff;
+
+			border: none;
+			cursor: pointer;
+			display: inline-block;
+
+
+		}
+
+		.cart-button button {
+			background-color: rgb(237, 195, 158);
+			transition: background-color 0.3s ease;
+			color: #ffffff;
+			padding: 10px 10px;
+			border: none;
+			cursor: pointer;
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+
+		}
+
+
+		@media (max-width: 768px) {
+			#login {
+				position: absolute;
+				display: block;
+				top: 10em;
+				right: 10%;
+				width: 10%;
+				text-align: center;
+				padding-right: 5%;
+			}
+
+			.button {
+				display: inline-block;
+				background-color: #fafafa;
+				color: #e69e5e;
+
+				border: #a9dcce;
+				border-radius: 100px;
+				cursor: pointer;
+				font-size: 1em;
+				height: 3.5em;
+				line-height: 4em;
+				width: 50%;
+			}
+		}
+
+		@media (min-width: 768px) and (max-width: 1024px) {
+			button {
+				top: 8em;
+
+			}
+		}
+
+		.nav-tabs.sticky-top {
+			position: -webkit-sticky;
+			position: sticky;
+			top: 0px;
+			z-index: 998;
+
+		}
+
+		
+
+
+            .buy-now-button {
+				display: inline-flex; /* 使用Flexbox布局 */
+                align-items: center; /* 垂直居中 */
+                font-size: 14px; /* 调整字体大小 */
+                border: 1px solid #ccc; /* 添加边框样式 */
+                background-color: rgb(243, 148, 148);
+                transition: background-color 0.3s ease;
+                color: rgb(255, 255, 255);
+				font-size: 14px; /* 调整字体大小 */
+                padding: 10px 20px; /* 可以根据需要调整按钮的内边距 */
+                border: none; /* 如果需要去掉按钮的边框 */
+                cursor: pointer; /* 让鼠标光标变成手型 */
+                float: right;
+            }
+
+            .buy-now-button:hover {
+                background-color: rgb(174, 167, 167); /* 悬停时的背景颜色 */
+                color: #433838;
+                border: 2px solid rgb(84, 69, 69);
+                float: right;
+            }   
+            .buy-now-button {
+                position: fixed; /* Fixed position relative to the viewport */
+                bottom: 90px; /* Distance from the bottom of the viewport */
+                right: 20px; /* Distance from the right side of the viewport */
+                z-index: 1000; /* Ensures the button stays on top of other elements */
+                /* Other styling here */
+            }
+			.go-to_cart {
+				display: inline-flex; /* 使用Flexbox布局 */
+                align-items: center; /* 垂直居中 */
+                font-size: 14px; /* 调整字体大小 */
+                border: 1px solid #ccc; /* 添加边框样式 */
+                background-color: rgb(230, 212, 152);
+                transition: background-color 0.3s ease;
+                color: rgb(101, 92, 92);
+                padding: 10px 20px; /* 可以根据需要调整按钮的内边距 */
+                border: none; /* 如果需要去掉按钮的边框 */
+                cursor: pointer; /* 让鼠标光标变成手型 */
+                float: right;
+            }
+
+            .go-to_cart:hover {
+                background-color: rgb(174, 167, 167); /* 悬停时的背景颜色 */
+                color: #433838;
+                border: 2px solid rgb(84, 69, 69);
+                float: right;
+            }   
+            .go-to_cart {
+                position: fixed; /* Fixed position relative to the viewport */
+                bottom: 40px; /* Distance from the bottom of the viewport */
+                right: 20px; /* Distance from the right side of the viewport */
+                z-index: 1000; /* Ensures the button stays on top of other elements */
+                /* Other styling here */
+            }
+			a, a:hover, a:active, a:visited {
+    			text-decoration: none!important;
+			}
+			.breadcrumbs {
+            	
+            	font-size: 16px;
+            	display: flex;
+            	align-items: center;
+            	list-style: none;
+            	color: #363030; /* 文字颜色 */
+        	}
+
+        .breadcrumbs a, .breadcrumbs span {
+            text-decoration: none;
+            transition: all 0.2s ease-in-out; /* 平滑过渡效果 */
+        }
+
+        .breadcrumbs a:hover {
+            font-size: 18px; /* 鼠标悬浮时字体变大 */
+            color: #5a5a5a; /* 鼠标悬浮时颜色变化 */
+        }
+
+        .breadcrumbs .icon {
+            margin-right: 10px; /* 图标与文本之间的间距 */
+            color: #5a5a5a; /* 图标颜色 */
+        }
+
+        .breadcrumbs .separator {
+            margin: 0 8px; /* 分隔符两侧的间距 */
+            color: #999; /* 分隔符颜色 */
+        }
+	</style>
+<style>.swal2-popup.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;background:#fff;box-shadow:0 0 1px rgba(0,0,0,.075),0 1px 2px rgba(0,0,0,.075),1px 2px 4px rgba(0,0,0,.075),1px 3px 8px rgba(0,0,0,.075),2px 4px 16px rgba(0,0,0,.075);pointer-events:all}.swal2-popup.swal2-toast>*{grid-column:2}.swal2-popup.swal2-toast .swal2-title{margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-loading{justify-content:center}.swal2-popup.swal2-toast .swal2-input{height:2em;margin:.5em;font-size:1em}.swal2-popup.swal2-toast .swal2-validation-message{font-size:1em}.swal2-popup.swal2-toast .swal2-footer{margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-popup.swal2-toast .swal2-close{grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-popup.swal2-toast .swal2-html-container{margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-popup.swal2-toast .swal2-html-container:empty{padding:0}.swal2-popup.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-popup.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-popup.swal2-toast .swal2-actions{justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-popup.swal2-toast .swal2-styled{margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-popup.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;transform:rotate(45deg);border-radius:50%}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-popup.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-popup.swal2-toast.swal2-show{animation:swal2-toast-show .5s}.swal2-popup.swal2-toast.swal2-hide{animation:swal2-toast-hide .1s forwards}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:.625em;overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:rgba(0,0,0,.4)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:32em;max-width:100%;padding:0 0 1.25em;border:none;border-radius:5px;background:#fff;color:#545454;font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1))}div:where(.swal2-container) div:where(.swal2-actions):not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{border:0;border-radius:.25em;background:initial;background-color:#7066e0;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:focus{box-shadow:0 0 0 3px rgba(112,102,224,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-deny{border:0;border-radius:.25em;background:initial;background-color:#dc3741;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled).swal2-deny:focus{box-shadow:0 0 0 3px rgba(220,55,65,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel{border:0;border-radius:.25em;background:initial;background-color:#6e7881;color:#fff;font-size:1em}div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel:focus{box-shadow:0 0 0 3px rgba(110,120,129,.5)}div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus{box-shadow:0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-styled):focus{outline:none}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid #eee;color:inherit;font-size:1em;text-align:center}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:5px;border-bottom-left-radius:5px}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:rgba(0,0,0,.2)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em}div:where(.swal2-container) button:where(.swal2-close){z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color .1s,box-shadow .1s;border:none;border-radius:5px;background:rgba(0,0,0,0);color:#ccc;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:none;background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus{outline:none;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) .swal2-html-container{z-index:1;justify-content:center;margin:1em 1.6em .3em;padding:0;overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;word-wrap:break-word;word-break:break-word}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:rgba(0,0,0,0);box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:1px solid #b4dbed;outline:none;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:#fff}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:rgba(0,0,0,0);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:rgba(0,0,0,0);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:#fff;color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:0.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#facea8;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#9de0f6;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#c9dae1;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;transform:rotate(45deg);border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:swal2-show .3s}.swal2-hide{animation:swal2-hide .15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@keyframes swal2-show{0%{transform:scale(0.7)}45%{transform:scale(1.05)}80%{transform:scale(0.95)}100%{transform:scale(1)}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(0.5);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}@media print{body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container{position:static !important}}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}</style></head>
+
+
+<body class="homepage" data-new-gr-c-s-check-loaded="14.1160.0" data-gr-ext-installed="">
+
+	<div id="page-wrapper">
+		
+
+
+
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+
+	<link rel="stylesheet" href="/static/css/main2.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script>
+		function login() {
+			location.href = "/member/login/";
+		}
+		function logout() {	
+            window.alert("您已登出會員");
+			window.location.href = "/member/logout/";
+		}
+	</script>
+	<style>
+		/*#header {
+        	position: sticky;
+        	top: 0;
+        	z-index: 999; 
+         其他樣式屬性 
+    	}*/
+		@media (max-width: 768px) {
+			.footer {
+				display: flex;
+				align-items: center;
+			}
+
+			.footer i {
+				max-width: 50%;
+				height: auto;
+			}
+
+			.footer h4 {
+				margin-left: 10px;
+			}
+
+			.carousel-indicators {
+				max-width: 50%;
+				margin: 0 auto;
+			}
+
+			.carousel-indicators button {
+				width: 10%;
+				height: 20px;
+
+			}
+		}
+
+		
+
+		.carousel-indicators {
+			display: flex;
+			justify-content: center;
+			list-style: none;
+			padding: 0;
+		}
+
+		
+
+
+		@media (max-width: 768px) {
+			
+
+			#additional-links {
+			margin-top: 20px;
+			width: 100%;
+			height: 60px;
+			padding: 10px;
+			font-size: 20px;
+			position: absolute;
+			top: 10%;
+			left:50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+			
+		}
+
+		#additional-links a {
+			margin-right: 5px;
+			text-decoration: none;
+			color: #6c4a4a; 
+			font-size: 16px;
+			
+		}
+
+		#additional-links button {
+			margin-right: 10px;
+			border-radius: 100px; 
+			text-decoration: none;
+			color: #851d1d;
+			font-size: 16px;
+			background-color: #f6f4e8; 
+			width: fit-content; 
+			height: 5em;
+			white-space: nowrap; 
+			padding: 1em 2em 1em 2em;
+		}
+    
+			
+	}
+
+		#additional-links {
+			margin-top: 8px;
+			width: 100%;
+			height: 50px;
+			padding: 10px;
+			font-size: 20px;
+			position: absolute;
+			top: 8%;
+			left:50%;
+			transform: translate(-50%, -50%);
+			text-align: right;
+			
+		}
+
+		#additional-links a {
+			margin-right: 8px;
+			text-decoration: none;
+			color: #6c4a4a; 
+			font-size: 16px;
+			
+		}
+
+		#additional-links button {
+			margin-right: 20px;
+			border-radius: 100px; 
+			text-decoration: none;
+			color: #6c4a4a;
+			font-size: 16px;
+			background-color: #f6f4e8; 
+			width: fit-content; 
+			height: 2em;
+			white-space: nowrap; 
+			padding: 1em 2em 1em 2em;
+		}
+		
+		input[type="button"],
+		input[type="submit"],
+		input[type="reset"],
+		button,
+		.button {
+			-moz-transition: all .25s ease-in-out;
+			-webkit-transition: all .25s ease-in-out;
+			-ms-transition: all .25s ease-in-out;
+			transition: all .25s ease-in-out;
+			display: inline-block;
+			background: #444;
+			text-align: center;
+			text-transform: uppercase;
+			font-weight: 700;
+			letter-spacing: 0.25em;
+			text-decoration: none;
+			border-radius: 0.35em;
+			border: 0;
+			outline: 0;
+			cursor: pointer;
+			padding: 0 2.25em 0 2.25em;
+			font-size: 0.9em;
+			min-width: 2em;
+			max-width: none;
+			
+			
+		}
+		
+		.container1 {
+		margin: 0 auto;
+		max-width: 100%;
+		width: 80em;
+		}
+
+		@media screen and (max-width: 1680px) {
+
+			.container1 {
+				width: 70em;
+			}
+
+		}
+
+		@media screen and (max-width: 1280px) {
+
+			.container1 {
+				width: calc(100% - 100px);
+			}
+
+		}
+
+		@media screen and (max-width: 980px) {
+
+			.container1 {
+				width: calc(100% - 100px);
+			}
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			.container1 {
+				width: calc(100% - 40px);
+			}
+
+		}
+
+		.custom-margin-bottom {
+        	margin-bottom: 0px; 
+    	}
+		.custom-margin-top {
+        	margin-top: 2px; 
+    	}
+
+		@media screen and (max-width: 736px) {
+
+		.container1 {
+			width: calc(100% - 40px);
+		}
+
+		}
+
+		@media (max-width: 768px) {
+    		#additional-links {
+        		display: none; 
+    		}
+		}
+
+		#additional-links2 {
+    		display: none;
+		}
+
+		
+		@media (max-width: 768px) {
+    		#additional-links2 {
+       			display: block; 
+    		}
+			#additional-links2 {
+			
+			width: 100%;
+			
+			
+			text-align: right;
+			
+			}
+
+			#additional-links2 a {
+				margin-right: 8px;
+				text-decoration: none;
+				color: #6c4a4a; 
+				font-size: 16px;
+				text-align: center;
+			}
+
+			#additional-links2 button {
+				margin-right: 20px;
+				border-radius: 100px; 
+				text-decoration: none;
+				color: #6c4a4a;
+				font-size: 16px;
+				background-color: #f6f4e8; 
+				width: fit-content; 
+				height: 2em;
+				white-space: nowrap; 
+				padding: 1em 2em 1em 2em;
+			}
+		}
+		
+	</style>
+
+
+
+	<div id="page-wrapper">
+        
+		<!-- style="position: fixed; top: 0; width: 100%; z-index: 9999;" -->
+		<section id="header" class="wrapper">
+
+			<logo id="logo">
+				<img src="/static/css/img/logo_new.png" alt="" class="logo-image">
+	
+			</logo>
+			
+			<div id="additional-links">
+				<a href="/store_cart/cart/"><i class="fas fa-shopping-cart"></i></a>
+				<a>|</a>
+				<a href="/"><i class="fas fa-home"></i></a>
+				<a>|</a>
+				
+				<button id="" class="" onclick="login()" style="padding: 0 1em 0 1em;">登入|註冊</button>
+				
+			</div>
+			
+		
+
+			<nav id="nav">
+
+				
+				<ul>
+					<li class="opener" style="user-select: none; cursor: pointer; white-space: nowrap;">
+						
+						<a href="#">關於歐印</a>
+						<ul class="dropotron level-0" style="user-select: none; display: none; position: absolute; z-index: 1000;">
+							<li style="white-space: nowrap;"><a href="/about_allen/discount/" style="display: block;">最新活動</a></li>
+							<li style="white-space: nowrap;"><a href="/about_allen/about_pilosophy/" style="display: block;">經營理念</a></li>
+							<li style="white-space: nowrap;"><a href="/about_allen/about_brand/" style="display: block;">品牌介紹</a></li>
+							<li style="white-space: nowrap;"><a href="/about_allen/about_loc/" style="display: block;">服務據點</a></li>
+						</ul>
+					</li>
+				</ul>
+				<ul>
+					<li class="opener" style="user-select: none; cursor: pointer; white-space: nowrap;">
+						<a href="#">商品介紹</a>
+						<ul class="dropotron level-0" style="user-select: none; display: none; position: absolute; z-index: 1000;">
+							<li class="opener" style="user-select: none; cursor: pointer; white-space: nowrap;"><a href="" style="display: block;">行李箱</a>
+								<ul class="dropotron level-1" style="user-select: none; display: none; position: absolute; z-index: 1001;">
+									<li style="white-space: nowrap;"><a href="/suitcase/pro_main_aluminum/" style="display: block;">鋁框式</a></li>
+									<li style="white-space: nowrap;"><a href="/suitcase/pro_main_zipper/" style="display: block;">拉鍊式</a></li>
+									<li style="white-space: nowrap;"><a href="/suitcase/pro_main_size_20/" style="display: block;">20吋以下</a></li>
+									<li style="white-space: nowrap;"><a href="/suitcase/pro_main_size_21_24/" style="display: block;">21吋-24吋</a></li>
+									<li style="white-space: nowrap;"><a href="/suitcase/pro_main_size_25_28/" style="display: block;">25吋-28吋</a></li>
+									<li style="white-space: nowrap;"><a href="/suitcase/pro_main_size_28_plus/" style="display: block;">28吋以上</a></li>
+								</ul>
+							</li>
+								
+							<li style="white-space: nowrap;"><a href="/suitcase/pro_ac/" style="display: block;">行李箱配件</a></li>
+							<li style="white-space: nowrap;"><a href="/suitcase/pro_cob/" style="display: block;">旅遊周邊</a></li>
+							<li style="white-space: nowrap;"><a href="/suitcase/pro_life/" style="display: block;">歐印嚴選</a></li>
+
+							<!-- <li><a href="/suitcase/pro_bo/">加值商品</a></li>-->
+						</ul>
+					</li>
+				</ul>
+				<ul>
+					<li class="opener" style="user-select: none; cursor: pointer; white-space: nowrap;">
+						<a href="#">維護保固</a>
+						<ul class="dropotron level-0" style="user-select: none; display: none; position: absolute; z-index: 1000;">
+							<li style="white-space: nowrap;"><a href="/repair/memno?current_member_no=" style="display: block;">維修申請</a></li>
+							<li style="white-space: nowrap;"><a href="/repair/wa_in" style="display: block;">保固說明|流程</a></li>
+							<li style="white-space: nowrap;"><a href="/repair/repair_price" style="display: block;">維修價格</a></li>
+							<li style="white-space: nowrap;"><a href="/repair/inquiry?current_member_no=" style="display: block;">維修單查詢</a></li>
+
+						</ul>
+					</li>
+				</ul>
+				<ul>
+					<li style="white-space: nowrap;">
+						<a href="/about_allen/news_share/">我的旅行</a>
+						
+					</li>
+				</ul>
+				
+
+				<ul>
+					<li class="opener" style="user-select: none; cursor: pointer; white-space: nowrap;">
+
+						<a href="#">訂購商品</a>
+						<ul class="dropotron level-0" style="user-select: none; display: none; position: absolute; z-index: 1000;">
+							<li style="white-space: nowrap;"><a href="/store_cart/cart/" style="display: block;">購物車｜結帳</a></li>
+							<li style="white-space: nowrap;"><a href="/order/inquiry?current_member_no=" style="display: block;">訂單查詢</a></li>
+							
+							<li style="white-space: nowrap;"><a href="/order/qa" style="display: block;">購物說明</a></li>
+
+						</ul>
+
+					</li>
+				</ul>
+				<ul>
+					<li class="opener" style="user-select: none; cursor: pointer; white-space: nowrap;">
+
+						<a href="#">會員資料</a>
+						<ul class="dropotron level-0" style="user-select: none; display: none; position: absolute; z-index: 1000;">
+							<li style="white-space: nowrap;"><a href="/member/membership_data/" style="display: block;">會員資料管理</a>
+							</li>
+							<!--<li><a href="user_record.html">購買紀錄查詢</a></li> -->
+							<!--<li><a href="user_adt.html">加值商品訂購</a></li> -->
+						</ul>
+
+					</li>
+				</ul>
+				<ul>
+					<li class="opener" style="user-select: none; cursor: pointer; white-space: nowrap;">
+						<a href="#">聯絡我們</a>
+						<ul class="dropotron level-0" style="user-select: none; display: none; position: absolute; z-index: 1000;">
+							<li style="white-space: nowrap;"><a href="/contact/contact_help/ " style="display: block;">客服窗口</a></li>
+							<li style="white-space: nowrap;"><a href="/contact/contact_social/" style="display: block;">社群連結</a></li>
+							<li style="white-space: nowrap;"><a href="/contact/contact_ad/" style="display: block;">想對我們說的話</a></li>
+							<li style="white-space: nowrap;"><a href="https://docs.google.com/forms/d/e/1FAIpQLSf5T8Jt46qCVAIgzvzLTv-wfvfqMOUX0Dl8VeS1Fnu_vxtysA/viewform" style="display: block;">廣告詢問｜合作連結</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</section>
+		<div id="additional-links2">
+			<a href="/store_cart/cart/"><i class="fas fa-shopping-cart"></i></a>
+			<a>|</a>
+			<a href="/"><i class="fas fa-home"></i></a>
+			
+			<button id="" class="" onclick="login()" style="padding: 0 1em 0 1em;">登入|註冊</button>
+			
+		</div>
+
+		
+		<script>
+			// 使用 AJAX 发送数据到后端
+			const showConfirmation = (event, element) => {
+				event.preventDefault(); // 阻止超链接的默认行为
+
+				// 从元素的 data-* 属性中获取数据
+				const suitcaseId = element.getAttribute('data-suitcase-id');
+				const color = element.getAttribute('data-current-color');
+
+				fetch('/store_cart/add_to_cart', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ suitcaseId: suitcaseId, color: color })
+				})
+					.then(response => {
+						if (response.status === 401) {
+							// 用户未登录
+							return response.json().then(data => {
+								window.alert('您尚未登入會員');
+								window.location.href = data.redirect_url;
+								return;
+							});
+						}
+						if (!response.ok) {
+							throw new Error('Network response was not ok');
+						}
+						return response.json();
+					})
+					.then(data => {
+						if (data) {
+							// 处理成功响应
+							Swal.fire({
+								icon: 'success',
+								title: '已成功加入購物車',
+								showConfirmButton: false,
+								timer: 1200,
+								background: '#c8c8c8',
+								iconColor: '#00ff00'
+							});
+						}
+					})
+					.catch((error) => {
+						console.error('Error:', error);
+					});
+
+			};
+		</script>
+
+		<section id="highlights" class="wrapper style3" style="background-color: #ffffff;border-top: 0;margin: 0;padding: 0;">
+
+
+			<div class="breadcrumbs" style="margin-left: 2%; margin-top: 2%;">
+				<i class="fa fa-map-marker-alt icon"></i>
+				<span>行李箱</span>
+				<span class="separator">&gt;</span>
+				<a href="/suitcase/pro_main_aluminum/">鋁框式</a>
+				<span class="separator">&gt;</span>
+				<span>型號-1512</span>
+			</div>
+
+			<div class="row">
+				<!--Navs tabs-->
+
+				<div class="container pt-5" style="margin: auto; width: 100%;">
+
+					<ul class="nav nav-tabs mt-8 sticky-top " role="tablist">
+						
+						<li class="nav-item" role="presentation">
+							<a class="nav-link active" data-bs-toggle="tab" href="#行李箱" aria-selected="true" role="tab">20吋以下登機箱</a>
+						</li>
+						
+						
+						<li class="nav-item" role="presentation">
+							<a class="nav-link" data-bs-toggle="tab" href="#一" aria-selected="false" tabindex="-1" role="tab">21-24吋行李箱</a>
+						</li>
+						
+						
+						
+
+					</ul>
+
+					<div class="tab-content mt-5">
+						<div class="tab-pane  active container" id="行李箱" role="tabpanel">
+							<div class="row">
+								
+								<div class="col-4 col-12-medium imp-mediumm">
+
+									<div class="">
+										<img id="size_20_product_image_1" style="height: 500px;width: 400px; filter: brightness(100%) blur(0);" src="/static/css/img/suitcase_img/2024-01-24_4.42.27.png" alt="產品圖片" class="product-image" onmouseover="this.style.filter='brightness(70%) blur(0)';" onmouseout="this.style.filter='brightness(100%) blur(0)';">
+
+
+									</div>
+
+								</div>
+								<div class="col-6 col-12-medium imp-mediumm" style="margin-left: 5%;">
+									<h3 class="product-title">1512-48 19吋</h3>
+									<br>
+									<div class="description">
+										<br>
+										<h3></h3>
+										<p>來自日本LEGEND WALKER行李箱大廠旗下品牌PETiCO，使用行李箱同級的材質與技術製造，讓寵物能跟著主人踏遍各個城市足跡！</p>
+										<br>
+									</div>
+									<h5 class="product-discount-price">特惠價格: NT $11280</h5>
+									<p class="product-regular-price">原價: NT ＄18800</p>
+									<!--<div class="color-options" id="colorButtons">-->
+									<h3></h3>
+									<br>
+									<br>
+									<p style="color: #6a5f5f;">選擇顏色</p>
+									<br>
+									<div id="size_20_colorButtons_1" class="cart-button" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+
+										<!-- 這裡將通過 JavaScript 動態生成按鈕 -->
+									<div style="display: flex; flex-direction: column; align-items: center; gap: 5px;"><button style="background-color: rgb(53, 78, 77); width: 30px; height: 30px; border-radius: 50%;"></button><div style="text-align: center; font-size: 12px; color: black;">星球綠(GR)</div></div><div style="display: flex; flex-direction: column; align-items: center; gap: 5px;"><button style="background-color: rgb(86, 84, 97); width: 30px; height: 30px; border-radius: 50%;"></button><div style="text-align: center; font-size: 12px; color: black;">海王藍(DARK NAVY)</div></div><div style="display: flex; flex-direction: column; align-items: center; gap: 5px;"><button style="background-color: rgb(186, 181, 178); width: 30px; height: 30px; border-radius: 50%;"></button><div style="text-align: center; font-size: 12px; color: black;">隕石灰(GUNMETAL)</div></div><div style="display: flex; flex-direction: column; align-items: center; gap: 5px;"><button style="background-color: rgb(203, 184, 170); width: 30px; height: 30px; border-radius: 50%;"></button><div style="text-align: center; font-size: 12px; color: black;">木星金(CGD)</div></div><div style="display: flex; flex-direction: column; align-items: center; gap: 5px;"><button style="background-color: rgb(216, 215, 211); width: 30px; height: 30px; border-radius: 50%;"></button><div style="text-align: center; font-size: 12px; color: black;">月球銀(SILVER)</div></div></div>
+
+									<!-- </div>-->
+									<h3></h3>
+									<br>
+									<br>
+									<a class="buy-now-button" href="" id="size_20_add_to_cart_1" onclick="showConfirmation(event, this)" data-suitcase-id="1512-48" data-current-color="#354e4d">加入購物車</a>
+
+									<a class="go-to_cart" href="/store_cart/cart/">前往購物車</a>
+									
+									<br>
+									
+
+
+								</div>
+								
+								<img src="/static/css/img/suitcase_img/51280066.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								<img src="/static/css/img/suitcase_img/51266963.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								<img src="/static/css/img/suitcase_img/51255972.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								<img src="/static/css/img/suitcase_img/51257546.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								<img src="/static/css/img/suitcase_img/51233176.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								
+
+
+							</div>
+						</div>
+
+						<div class="tab-pane container " id="一" role="tabpanel">
+							<div class="row">
+								
+								<div class="col-4 col-12-medium imp-mediumm">
+
+									<div class="">
+										<img id="size_21_24_product_image_1" style="height: 500px;width: 400px; filter: brightness(100%) blur(0);" src="/static/css/img/suitcase_img/2024-01-24_4.42.27.png" alt="產品圖片" class="product-image" onmouseover="this.style.filter='brightness(70%) blur(0)';" onmouseout="this.style.filter='brightness(100%) blur(0)';">
+
+
+									</div>
+
+								</div>
+								<div class="col-6 col-12-medium imp-mediumm" style="margin-left: 5%;">
+									<h3 class="product-title">1512-60 24吋</h3>
+									<br>
+									<div class="description">
+										<br>
+										<h3></h3>
+										<p>來自日本LEGEND WALKER行李箱大廠旗下品牌PETiCO，使用行李箱同級的材質與技術製造，讓寵物能跟著主人踏遍各個城市足跡！</p>
+										<br>
+									</div>
+									<h5 class="product-discount-price">特惠價格: NT $12480</h5>
+									<p class="product-regular-price">原價: NT ＄20800</p>
+									<!--<div class="color-options" id="colorButtons">-->
+									<h3></h3>
+									<br>
+									<br>
+									<p style="color: #6a5f5f;">選擇顏色</p>
+									<br>
+									<div id="size_21_24_colorButtons_1" class="cart-button" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+
+										<!-- 這裡將通過 JavaScript 動態生成按鈕 -->
+									<div style="display: flex; flex-direction: column; align-items: center; gap: 5px;"><button style="background-color: rgb(53, 78, 77); width: 30px; height: 30px; border-radius: 50%;"></button><div style="text-align: center; font-size: 12px; color: black;">星球綠(GR)</div></div><div style="display: flex; flex-direction: column; align-items: center; gap: 5px;"><button style="background-color: rgb(186, 181, 178); width: 30px; height: 30px; border-radius: 50%;"></button><div style="text-align: center; font-size: 12px; color: black;">隕石灰(GUNMETAL)</div></div><div style="display: flex; flex-direction: column; align-items: center; gap: 5px;"><button style="background-color: rgb(203, 184, 170); width: 30px; height: 30px; border-radius: 50%;"></button><div style="text-align: center; font-size: 12px; color: black;">木星金(CGD)</div></div></div>
+
+									<!-- </div>-->
+									<h3></h3>
+									<br>
+									<a class="buy-now-button" href="" id="size_21_24_add_to_cart_1" onclick="showConfirmation(event, this)" data-suitcase-id="1512-60" data-current-color="#354e4d">加入購物車</a>
+
+									<a class="go-to_cart" href="/store_cart/cart/">前往購物車</a>
+									
+									
+
+
+								</div>
+								
+								<img src="/static/css/img/suitcase_img/51280066.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								<img src="/static/css/img/suitcase_img/51266963.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								<img src="/static/css/img/suitcase_img/51255972.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								<img src="/static/css/img/suitcase_img/51257546.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								<img src="/static/css/img/suitcase_img/51233176.jpg" alt="Suitcase Image" class="d-block w-95" style="width:60% ">
+								
+								
+							</div>
+						</div>
+
+						<div class="tab-pane container " id="五">
+							<div class="row">
+								
+							</div>
+						</div>
+
+						<div class="tab-pane container " id="八">
+							<div class="row">
+								
+							</div>
+
+
+						</div>
+
+
+
+
+
+					</div>
+				</div>
+
+		</div></section>
+
+
+
+
+	</div>
+
+	<script>
+		var suitcases_data_20 = JSON.parse('[{"current_color": "#354e4d", "default_image_path": "css/img/suitcase_img/2024-01-24_4.42.27.png", "first_color": "#354e4d", "prod_colors_and_images": {"#354e4d": {"color_quan": 1, "estarrivaldate": null, "fac_prodcolorchi": null, "image_path": "css/img/suitcase_img/2024-01-24_4.42.27.png", "name": "\u661f\u7403\u7da0(GR)"}, "#565461": {"color_quan": 1, "estarrivaldate": null, "fac_prodcolorchi": null, "image_path": "css/img/suitcase_img/2024-01-25_11.56.03.png", "name": "\u6d77\u738b\u85cd(DARK NAVY)"}, "#bab5b2": {"color_quan": 1, "estarrivaldate": null, "fac_prodcolorchi": null, "image_path": "css/img/suitcase_img/1512_60_1.png", "name": "\u9695\u77f3\u7070(GUNMETAL)"}, "#cbb8aa": {"color_quan": 1, "estarrivaldate": null, "fac_prodcolorchi": null, "image_path": "css/img/suitcase_img/2024-01-24_4.42.34.png", "name": "\u6728\u661f\u91d1(CGD)"}, "#d8d7d3": {"color_quan": 1, "estarrivaldate": null, "fac_prodcolorchi": null, "image_path": "css/img/suitcase_img/2024-01-25_11.55.59.png", "name": "\u6708\u7403\u9280(SILVER)"}}, "prod_material": 1, "suitcase": {"delivery_no": "1", "price_issale": 0, "prod_endsize": "19", "prod_fixyear": 1, "prod_isshelf": true, "prod_name": "\u8d85\u5f37\u5927\u884c\u674e\u7bb1", "prod_no": "1512", "prod_note": "", "prod_origprice": 18800, "prod_price": 11280, "prod_serialno": "1512-48", "prod_size": "19\u540b", "prod_startsize": "19"}}]');
+		var allImageElements_20 = []; // 儲存 size_20 的所有圖片元素
+		for (var i = 0; i < suitcases_data_20.length; i++) {
+			var prod_colors_and_images = suitcases_data_20[i]['prod_colors_and_images'];
+
+			var colorButtonsDiv = document.getElementById('size_20_colorButtons_' + (i + 1));
+			var imageElements = {};  // 每個商品都有自己的 imageElements
+
+			// 全局變量，用於追蹤最後選中的顏色按鈕
+			var lastSelectedButton_20 = null;
+
+
+
+			function size_20_preloadImages() {
+				for (var color in prod_colors_and_images) {
+					var tempImg = new Image();
+					tempImg.src = "/static/" + prod_colors_and_images[color]['image_path'];
+					imageElements[color] = tempImg;
+				}
+				allImageElements_20.push(imageElements); // 將當前商品的imageElements添加到allImageElements_20陣列中
+			}
+
+
+			function size_20_displaySelectedColor(color, index) {
+				var imgElement = document.getElementById('size_20_product_image_' + index);
+				var currentImageElements = allImageElements_20[index - 1]; // 获取当前商品的 imageElements
+				var addToCartElement = document.getElementById('size_20_add_to_cart_' + index);
+
+				if (currentImageElements && currentImageElements[color]) {
+					imgElement.src = currentImageElements[color].src;
+
+					// 更新加入购物车链接的 data-current-color 属性
+					addToCartElement.setAttribute('data-current-color', color);
+				} else {
+					console.error("Image for color " + color + " does not exist.");
+				}
+			}
+
+			function handleColor_size_20_ButtonClick(button, color, index) {
+				// 為點擊的按鈕添加紅色邊框
+				button.style.border = '2px solid red';
+
+				// 從之前選中的按鈕中移除邊框
+				if (lastSelectedButton_20 && lastSelectedButton_20 !== button) {
+					lastSelectedButton_20.style.border = 'none';
+				}
+
+				// 更新最後選中的按鈕引用
+				lastSelectedButton_20 = button;
+
+				// 調用原始函數處理顏色選擇
+				size_20_displaySelectedColor(color, index); // 或其他尺寸對應的函數
+			}
+
+
+			// Assume colorButtonsDiv is already defined and is the parent container for the color pairs
+			colorButtonsDiv.style.display = 'flex'; // Set the display to flex to align children side by side
+			colorButtonsDiv.style.flexWrap = 'wrap'; // Allow items to wrap as needed
+			colorButtonsDiv.style.justifyContent = 'center'; // Center items in the container
+			colorButtonsDiv.style.gap = '10px'; // Add space between the color pairs
+
+			for (var color in prod_colors_and_images) {
+				if (prod_colors_and_images[color]['color_quan'] == 0 && prod_colors_and_images[color]['estarrivaldate'] == null) {
+					continue;
+				}
+
+				var button = document.createElement('button');
+				button.style.backgroundColor = color;
+				button.style.width = '30px';
+				button.style.height = '30px';
+				button.style.borderRadius = '50%';
+				// Remove margin if set previously, as it's not needed with gap in flex container
+
+				// 更新您現有代碼中的 button.onclick 分配
+				button.onclick = (function (color, index) {
+					return function () {
+						handleColor_size_20_ButtonClick(this, color, index);
+					};
+				})(color, i + 1);
+
+				// Create color name element
+				var colorNameDiv = document.createElement('div');
+				colorNameDiv.textContent = prod_colors_and_images[color]['name'];
+				colorNameDiv.style.textAlign = 'center';
+				colorNameDiv.style.fontSize = '12px'; // Adjust font size as needed
+				colorNameDiv.style.color = 'black';
+
+				// Create a container div for the button and its label
+				var colorPairDiv = document.createElement('div');
+				colorPairDiv.style.display = 'flex';
+				colorPairDiv.style.flexDirection = 'column'; // Align button and label in a row
+				colorPairDiv.style.alignItems = 'center'; // Center items vertically
+				colorPairDiv.style.gap = '5px'; // Add space between the button and label
+
+				colorPairDiv.appendChild(button);
+				colorPairDiv.appendChild(colorNameDiv);
+
+				colorButtonsDiv.appendChild(colorPairDiv); // Add the pair container to the parent
+			}
+
+			// 頁面加載時預先加載所有圖片
+			size_20_preloadImages();
+		}
+	</script>
+	<script>
+		var suitcases_data_21_24 = JSON.parse('[{"current_color": "#354e4d", "default_image_path": "css/img/suitcase_img/2024-01-24_4.42.27.png", "first_color": "#354e4d", "prod_colors_and_images": {"#354e4d": {"color_quan": 2, "estarrivaldate": null, "fac_prodcolorchi": null, "image_path": "css/img/suitcase_img/2024-01-24_4.42.27.png", "name": "\u661f\u7403\u7da0(GR)"}, "#bab5b2": {"color_quan": 1, "estarrivaldate": null, "fac_prodcolorchi": null, "image_path": "css/img/suitcase_img/1512_60_1.png", "name": "\u9695\u77f3\u7070(GUNMETAL)"}, "#cbb8aa": {"color_quan": 10, "estarrivaldate": null, "fac_prodcolorchi": null, "image_path": "css/img/suitcase_img/2024-01-24_4.42.34.png", "name": "\u6728\u661f\u91d1(CGD)"}}, "prod_material": 1, "suitcase": {"delivery_no": "1", "price_issale": 0, "prod_endsize": "24", "prod_fixyear": 1, "prod_isshelf": true, "prod_name": "\u66f4\u5f37", "prod_no": "1512", "prod_note": "", "prod_origprice": 20800, "prod_price": 12480, "prod_serialno": "1512-60", "prod_size": "24\u540b", "prod_startsize": "24"}}]');
+		var allImageElements_21_24 = []; // 儲存 size_21_24 的所有圖片元素
+		for (var i = 0; i < suitcases_data_21_24.length; i++) {
+			var prod_colors_and_images = suitcases_data_21_24[i]['prod_colors_and_images'];
+
+			var colorButtonsDiv = document.getElementById('size_21_24_colorButtons_' + (i + 1));
+			var imageElements = {};  // 每個商品都有自己的 imageElements
+			var lastSelectedButton_21_24 = null;
+
+			function size_21_24_preloadImages() {
+				for (var color in prod_colors_and_images) {
+					var tempImg = new Image();
+					tempImg.src = "/static/" + prod_colors_and_images[color]['image_path'];
+					imageElements[color] = tempImg;
+				}
+				allImageElements_21_24.push(imageElements); // 將當前商品的imageElements添加到allImageElements_21_24陣列中
+			}
+
+
+			function size_21_24_displaySelectedColor(color, index) {
+				var imgElement = document.getElementById('size_21_24_product_image_' + index);
+				var currentImageElements = allImageElements_21_24[index - 1]; // 获取当前商品的 imageElements
+				var addToCartElement = document.getElementById('size_21_24_add_to_cart_' + index);
+
+				if (currentImageElements && currentImageElements[color]) {
+					imgElement.src = currentImageElements[color].src;
+
+					// 更新加入购物车链接的 data-current-color 属性
+					addToCartElement.setAttribute('data-current-color', color);
+				} else {
+					console.error("Image for color " + color + " does not exist.");
+				}
+			}
+
+			function handleColor_size_21_24_ButtonClick(button, color, index) {
+				// 為點擊的按鈕添加紅色邊框
+				button.style.border = '2px solid red';
+
+				// 從之前選中的按鈕中移除邊框
+				if (lastSelectedButton_21_24 && lastSelectedButton_21_24 !== button) {
+					lastSelectedButton_21_24.style.border = 'none';
+				}
+
+				// 更新最後選中的按鈕引用
+				lastSelectedButton_21_24 = button;
+
+				// 調用原始函數處理顏色選擇
+				size_21_24_displaySelectedColor(color, index); // 或其他尺寸對應的函數
+			}
+
+
+			// Assume colorButtonsDiv is already defined and is the parent container for the color pairs
+			colorButtonsDiv.style.display = 'flex'; // Set the display to flex to align children side by side
+			colorButtonsDiv.style.flexWrap = 'wrap'; // Allow items to wrap as needed
+			colorButtonsDiv.style.justifyContent = 'center'; // Center items in the container
+			colorButtonsDiv.style.gap = '10px'; // Add space between the color pairs
+
+			for (var color in prod_colors_and_images) {
+				if (prod_colors_and_images[color]['color_quan'] == 0 && prod_colors_and_images[color]['estarrivaldate'] == null) {
+					continue;
+				}
+
+				var button = document.createElement('button');
+				button.style.backgroundColor = color;
+				button.style.width = '30px';
+				button.style.height = '30px';
+				button.style.borderRadius = '50%';
+				// Remove margin if set previously, as it's not needed with gap in flex container
+
+				button.onclick = (function (color, index) {
+					return function () {
+						handleColor_size_21_24_ButtonClick(this, color, index);
+					};
+				})(color, i + 1);
+
+				// Create color name element
+				var colorNameDiv = document.createElement('div');
+				colorNameDiv.textContent = prod_colors_and_images[color]['name'];
+				colorNameDiv.style.textAlign = 'center';
+				colorNameDiv.style.fontSize = '12px'; // Adjust font size as needed
+				colorNameDiv.style.color = 'black';
+
+				// Create a container div for the button and its label
+				var colorPairDiv = document.createElement('div');
+				colorPairDiv.style.display = 'flex';
+				colorPairDiv.style.flexDirection = 'column'; // Align button and label in a row
+				colorPairDiv.style.alignItems = 'center'; // Center items vertically
+				colorPairDiv.style.gap = '5px'; // Add space between the button and label
+
+				colorPairDiv.appendChild(button);
+				colorPairDiv.appendChild(colorNameDiv);
+
+				colorButtonsDiv.appendChild(colorPairDiv); // Add the pair container to the parent
+			}
+
+			// 頁面加載時預先加載所有圖片
+			size_21_24_preloadImages();
+		}
+	</script>
+	<script>
+		var suitcases_data_25_28 = JSON.parse('[]');
+		var allImageElements_25_28 = []; // 儲存 size_20 的所有圖片元素
+		for (var i = 0; i < suitcases_data_25_28.length; i++) {
+			var prod_colors_and_images = suitcases_data_25_28[i]['prod_colors_and_images'];
+
+			var colorButtonsDiv = document.getElementById('size_25_28_colorButtons_' + (i + 1));
+			var imageElements = {};  // 每個商品都有自己的 imageElements
+			var lastSelectedButton_25_28 = null;
+
+			function size_25_28_preloadImages() {
+				for (var color in prod_colors_and_images) {
+					var tempImg = new Image();
+					tempImg.src = "/static/" + prod_colors_and_images[color]['image_path'];
+					imageElements[color] = tempImg;
+				}
+				allImageElements_25_28.push(imageElements);
+			}
+
+
+			function size_25_28_displaySelectedColor(color, index) {
+				var imgElement = document.getElementById('size_25_28_product_image_' + index);
+				var currentImageElements = allImageElements_25_28[index - 1]; // 获取当前商品的 imageElements
+				var addToCartElement = document.getElementById('size_25_28_add_to_cart_' + index);
+
+				if (currentImageElements && currentImageElements[color]) {
+					imgElement.src = currentImageElements[color].src;
+
+					// 更新加入购物车链接的 data-current-color 属性
+					addToCartElement.setAttribute('data-current-color', color);
+				} else {
+					console.error("Image for color " + color + " does not exist.");
+				}
+			}
+
+			function handleColor_size_25_28_ButtonClick(button, color, index) {
+				// 為點擊的按鈕添加紅色邊框
+				button.style.border = '2px solid red';
+
+				// 從之前選中的按鈕中移除邊框
+				if (lastSelectedButton_25_28 && lastSelectedButton_25_28 !== button) {
+					lastSelectedButton_25_28.style.border = 'none';
+				}
+
+				// 更新最後選中的按鈕引用
+				lastSelectedButton_25_28 = button;
+
+				// 調用原始函數處理顏色選擇
+				size_25_28_displaySelectedColor(color, index); // 或其他尺寸對應的函數
+			}
+
+
+			// Assume colorButtonsDiv is already defined and is the parent container for the color pairs
+			colorButtonsDiv.style.display = 'flex'; // Set the display to flex to align children side by side
+			colorButtonsDiv.style.flexWrap = 'wrap'; // Allow items to wrap as needed
+			colorButtonsDiv.style.justifyContent = 'center'; // Center items in the container
+			colorButtonsDiv.style.gap = '10px'; // Add space between the color pairs
+
+			for (var color in prod_colors_and_images) {
+				if (prod_colors_and_images[color]['color_quan'] == 0 && prod_colors_and_images[color]['estarrivaldate'] == null) {
+					continue;
+				}
+
+				var button = document.createElement('button');
+				button.style.backgroundColor = color;
+				button.style.width = '30px';
+				button.style.height = '30px';
+				button.style.borderRadius = '50%';
+				// Remove margin if set previously, as it's not needed with gap in flex container
+
+				button.onclick = (function (color, index) {
+					return function () {
+						handleColor_size_25_28_ButtonClick(this, color, index);
+					};
+				})(color, i + 1);
+
+				// Create color name element
+				var colorNameDiv = document.createElement('div');
+				colorNameDiv.textContent = prod_colors_and_images[color]['name'];
+				colorNameDiv.style.textAlign = 'center';
+				colorNameDiv.style.fontSize = '12px'; // Adjust font size as needed
+				colorNameDiv.style.color = 'black';
+
+				// Create a container div for the button and its label
+				var colorPairDiv = document.createElement('div');
+				colorPairDiv.style.display = 'flex';
+				colorPairDiv.style.flexDirection = 'column'; // Align button and label in a row
+				colorPairDiv.style.alignItems = 'center'; // Center items vertically
+				colorPairDiv.style.gap = '5px'; // Add space between the button and label
+
+				colorPairDiv.appendChild(button);
+				colorPairDiv.appendChild(colorNameDiv);
+
+				colorButtonsDiv.appendChild(colorPairDiv); // Add the pair container to the parent
+			}
+
+			// 頁面加載時預先加載所有圖片
+			size_25_28_preloadImages();
+		}
+	</script>
+
+	<script>
+		var suitcases_data_28_plus = JSON.parse('[]');
+		var allImageElements_25_28 = []; // 儲存 size_20 的所有圖片元素
+		for (var i = 0; i < suitcases_data_28_plus.length; i++) {
+			var prod_colors_and_images = suitcases_data_28_plus[i]['prod_colors_and_images'];
+
+			var colorButtonsDiv = document.getElementById('size_28_plus_colorButtons_' + (i + 1));
+			var imageElements = {};  // 每個商品都有自己的 imageElements
+			var lastSelectedButton_28_plus = null;
+
+			function size_28_plus_preloadImages() {
+				for (var color in prod_colors_and_images) {
+					var tempImg = new Image();
+					tempImg.src = "/static/" + prod_colors_and_images[color]['image_path'];
+					imageElements[color] = tempImg;
+				}
+				allImageElements_25_28.push(imageElements);
+			}
+
+
+			function size_28_plus_displaySelectedColor(color, index) {
+				var imgElement = document.getElementById('size_28_plus_product_image_' + index);
+				var currentImageElements = allImageElements_25_28[index - 1]; // 获取当前商品的 imageElements
+				var addToCartElement = document.getElementById('size_28_plus_add_to_cart_' + index);
+
+				if (currentImageElements && currentImageElements[color]) {
+					imgElement.src = currentImageElements[color].src;
+
+					// 更新加入购物车链接的 data-current-color 属性
+					addToCartElement.setAttribute('data-current-color', color);
+				} else {
+					console.error("Image for color " + color + " does not exist.");
+				}
+			}
+
+			function handleColor_size_28_plus_ButtonClick(button, color, index) {
+				// 為點擊的按鈕添加紅色邊框
+				button.style.border = '2px solid red';
+
+				// 從之前選中的按鈕中移除邊框
+				if (lastSelectedButton_28_plus && lastSelectedButton_28_plus !== button) {
+					lastSelectedButton_28_plus.style.border = 'none';
+				}
+
+				// 更新最後選中的按鈕引用
+				lastSelectedButton_28_plus = button;
+
+				// 調用原始函數處理顏色選擇
+				size_28_plus_displaySelectedColor(color, index); // 或其他尺寸對應的函數
+			}
+
+
+
+
+			// Assume colorButtonsDiv is already defined and is the parent container for the color pairs
+			colorButtonsDiv.style.display = 'flex'; // Set the display to flex to align children side by side
+			colorButtonsDiv.style.flexWrap = 'wrap'; // Allow items to wrap as needed
+			colorButtonsDiv.style.justifyContent = 'center'; // Center items in the container
+			colorButtonsDiv.style.gap = '10px'; // Add space between the color pairs
+
+			for (var color in prod_colors_and_images) {
+				if (prod_colors_and_images[color]['color_quan'] == 0 && prod_colors_and_images[color]['estarrivaldate'] == null) {
+					continue;
+				}
+
+				var button = document.createElement('button');
+				button.style.backgroundColor = color;
+				button.style.width = '30px';
+				button.style.height = '30px';
+				button.style.borderRadius = '50%';
+				// Remove margin if set previously, as it's not needed with gap in flex container
+
+				button.onclick = (function (color, index) {
+					return function () {
+						handleColor_size_28_plus_ButtonClick(this, color, index);
+					};
+				})(color, i + 1);
+
+				// Create color name element
+				var colorNameDiv = document.createElement('div');
+				colorNameDiv.textContent = prod_colors_and_images[color]['name'];
+				colorNameDiv.style.textAlign = 'center';
+				colorNameDiv.style.fontSize = '12px'; // Adjust font size as needed
+				colorNameDiv.style.color = 'black';
+
+				// Create a container div for the button and its label
+				var colorPairDiv = document.createElement('div');
+				colorPairDiv.style.display = 'flex';
+				colorPairDiv.style.flexDirection = 'column'; // Align button and label in a row
+				colorPairDiv.style.alignItems = 'center'; // Center items vertically
+				colorPairDiv.style.gap = '5px'; // Add space between the button and label
+
+				colorPairDiv.appendChild(button);
+				colorPairDiv.appendChild(colorNameDiv);
+
+				colorButtonsDiv.appendChild(colorPairDiv); // Add the pair container to the parent
+			}
+
+			// 頁面加載時預先加載所有圖片
+			size_28_plus_preloadImages();
+		}
+	</script>
+
+	<script src="/static/js/jquery.min.js"></script>
+	<script src="/static/js/jquery.dropotron.min.js"></script>
+	<script src="/static/js/browser.min.js"></script>
+	<script src="/static/js/breakpoints.min.js"></script>
+	<script src="/static/js/util.js"></script>
+	<script src="/static/js/main.js"></script>
+	<!--<script src="/static/jquery/update_session.js"></script>-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+	
+
+		<section style="background: #ffffff ;height: 5em; display: flex; flex-direction: row; align-items: center;text-align: center;justify-content: center;margin-bottom: 0; margin-top: 0;padding: 0;">
+			
+				<a href="https://www.facebook.com/legendwalkertaiwan/">
+					<i class="fab fa-facebook fa-2x" style="color: rgb(136, 184, 219);margin-left: 10px; margin-right: 10px;"></i>
+				</a>
+				
+				<a href="https://line.me/R/ti/p/_idjyEv115">
+					<i class="fab fa-line fa-2x" style="color: rgb(97, 172, 94);margin-left: 10px; margin-right: 10px;margin-bottom: 0%;padding-bottom: 0%;"></i>
+				</a>
+				
+				<a href="https://www.youtube.com/user/legendwalker6000">
+					<i class="fab fa-youtube fa-2x" style="color: rgb(240, 85, 85);margin-left: 10px; margin-right: 10px;"></i>
+				</a>
+				<a href="https://www.instagram.com/all_en.boutique/">
+					<i class="fab fa-instagram fa-2x" style="color: rgb(216, 110, 184);margin-left: 10px; margin-right: 10px;"></i>
+				</a>
+				
+		</section>
+
+		<section style="height: 3em;margin-top: 0; margin-bottom: 0;padding: 0;">
+			<img id="desktopImage" src="/static/css/img/footer0106.png" alt="" class="footer-image" style="width: 100%; display: block;">
+			<img id="mobileImage" src="/static/css/img/footer_mobile.png" alt="" class="footer-image" style="width: 100%; display: none;">
+		</section>
+		
+	</div><div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title">undefined</span></div><div id="navPanel"><nav><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>關於歐印</a><a class="link depth-1" href="/about_allen/discount/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>最新活動</a><a class="link depth-1" href="/about_allen/about_pilosophy/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>經營理念</a><a class="link depth-1" href="/about_allen/about_brand/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>品牌介紹</a><a class="link depth-1" href="/about_allen/about_loc/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>服務據點</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>商品介紹</a><a class="link depth-1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>行李箱</a><a class="link depth-2" href="/suitcase/pro_main_aluminum/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>鋁框式</a><a class="link depth-2" href="/suitcase/pro_main_zipper/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>拉鍊式</a><a class="link depth-2" href="/suitcase/pro_main_size_20/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>20吋以下</a><a class="link depth-2" href="/suitcase/pro_main_size_21_24/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>21吋-24吋</a><a class="link depth-2" href="/suitcase/pro_main_size_25_28/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>25吋-28吋</a><a class="link depth-2" href="/suitcase/pro_main_size_28_plus/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>28吋以上</a><a class="link depth-1" href="/suitcase/pro_ac/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>行李箱配件</a><a class="link depth-1" href="/suitcase/pro_cob/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>旅遊周邊</a><a class="link depth-1" href="/suitcase/pro_life/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>歐印嚴選</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>維護保固</a><a class="link depth-1" href="/repair/memno?current_member_no=" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>維修申請</a><a class="link depth-1" href="/repair/wa_in" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>保固說明|流程</a><a class="link depth-1" href="/repair/repair_price" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>維修價格</a><a class="link depth-1" href="/repair/inquiry?current_member_no=" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>維修單查詢</a><a class="link depth-0" href="/about_allen/news_share/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>我的旅行</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>訂購商品</a><a class="link depth-1" href="/store_cart/cart/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>購物車｜結帳</a><a class="link depth-1" href="/order/inquiry?current_member_no=" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>訂單查詢</a><a class="link depth-1" href="/order/qa" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>購物說明</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>會員資料</a><a class="link depth-1" href="/member/membership_data/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>會員資料管理</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>聯絡我們</a><a class="link depth-1" href="/contact/contact_help/ " style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>客服窗口</a><a class="link depth-1" href="/contact/contact_social/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>社群連結</a><a class="link depth-1" href="/contact/contact_ad/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>想對我們說的話</a><a class="link depth-1" href="https://docs.google.com/forms/d/e/1FAIpQLSf5T8Jt46qCVAIgzvzLTv-wfvfqMOUX0Dl8VeS1Fnu_vxtysA/viewform" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>廣告詢問｜合作連結</a></nav></div>
+    
+	<!-- Scripts -->
+	<script src="/static/js/jquery.min.js"></script>
+	<script src="/static/js/jquery.dropotron.min.js"></script>
+	<script src="/static/js/browser.min.js"></script>
+	<script src="/static/js/breakpoints.min.js"></script>
+	<script src="/static/js/util.js"></script>
+	<script src="/static/js/main.js"></script><div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title">undefined</span></div><div id="navPanel"><nav><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>關於歐印</a><a class="link depth-1" href="/about_allen/discount/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>最新活動</a><a class="link depth-1" href="/about_allen/about_pilosophy/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>經營理念</a><a class="link depth-1" href="/about_allen/about_brand/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>品牌介紹</a><a class="link depth-1" href="/about_allen/about_loc/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>服務據點</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>商品介紹</a><a class="link depth-1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>行李箱</a><a class="link depth-2" href="/suitcase/pro_main_aluminum/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>鋁框式</a><a class="link depth-2" href="/suitcase/pro_main_zipper/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>拉鍊式</a><a class="link depth-2" href="/suitcase/pro_main_size_20/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>20吋以下</a><a class="link depth-2" href="/suitcase/pro_main_size_21_24/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>21吋-24吋</a><a class="link depth-2" href="/suitcase/pro_main_size_25_28/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>25吋-28吋</a><a class="link depth-2" href="/suitcase/pro_main_size_28_plus/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-2"></span>28吋以上</a><a class="link depth-1" href="/suitcase/pro_ac/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>行李箱配件</a><a class="link depth-1" href="/suitcase/pro_cob/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>旅遊周邊</a><a class="link depth-1" href="/suitcase/pro_life/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>歐印嚴選</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>維護保固</a><a class="link depth-1" href="/repair/memno?current_member_no=" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>維修申請</a><a class="link depth-1" href="/repair/wa_in" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>保固說明|流程</a><a class="link depth-1" href="/repair/repair_price" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>維修價格</a><a class="link depth-1" href="/repair/inquiry?current_member_no=" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>維修單查詢</a><a class="link depth-0" href="/about_allen/news_share/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>我的旅行</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>訂購商品</a><a class="link depth-1" href="/store_cart/cart/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>購物車｜結帳</a><a class="link depth-1" href="/order/inquiry?current_member_no=" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>訂單查詢</a><a class="link depth-1" href="/order/qa" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>購物說明</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>會員資料</a><a class="link depth-1" href="/member/membership_data/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>會員資料管理</a><a class="link depth-0" href="#" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-0"></span>聯絡我們</a><a class="link depth-1" href="/contact/contact_help/ " style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>客服窗口</a><a class="link depth-1" href="/contact/contact_social/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>社群連結</a><a class="link depth-1" href="/contact/contact_ad/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>想對我們說的話</a><a class="link depth-1" href="https://docs.google.com/forms/d/e/1FAIpQLSf5T8Jt46qCVAIgzvzLTv-wfvfqMOUX0Dl8VeS1Fnu_vxtysA/viewform" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><span class="indent-1"></span>廣告詢問｜合作連結</a></nav></div>
+	<!--<script src="/static/jquery/update_session.js"></script> -->
+	<script>
+		function checkDeviceWidth() {
+			var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	
+			var desktopImage = document.getElementById('desktopImage');
+			var mobileImage = document.getElementById('mobileImage');
+	
+			if (width <= 767) {
+				desktopImage.style.display = 'none';
+				mobileImage.style.display = 'block';
+			} else {
+				desktopImage.style.display = 'block';
+				mobileImage.style.display = 'none';
+			}
+		}
+	
+		// 在頁面載入時檢查並設置適當的圖片
+		window.onload = function() {
+			checkDeviceWidth();
+		}
+	
+		// 當視窗大小改變時重新檢查並更新圖片
+		window.onresize = function() {
+			checkDeviceWidth();
+		}
+		
+	</script>
+    
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
